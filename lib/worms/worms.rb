@@ -18,7 +18,7 @@ module Worms
       @map = Map.new
 
       # Add the players
-      @player_count = 7
+      @player_count = 3
       raise "
         The max players is #{colors.size}.
         And you trying get #{@player_count} players on this game!
@@ -46,16 +46,19 @@ module Worms
 
       # If any text should be displayed, draw it - and add a nice black border around it
       # by drawing it four times, with a little offset in each direction.
-
-      cur_text = @player_instructions[@current_player] if not @waiting
-      # cur_text = @player_won_messages[@current_player] if @players[@current_player].dead
+      if not @waiting
+        cur_text = @player_instructions[@current_player]
+      elsif another_players_has_dead @current_player, @players
+        cur_text = @player_won_messages[@current_player]
+        @waiting = true
+      end
 
       if cur_text then
         x, y = 0, 30
-        cur_text.draw(x - 1, y, 0, 1, 1, 0xff_000000)
-        cur_text.draw(x + 1, y, 0, 1, 1, 0xff_000000)
-        cur_text.draw(x, y - 1, 0, 1, 1, 0xff_000000)
-        cur_text.draw(x, y + 1, 0, 1, 1, 0xff_000000)
+        cur_text.draw(x - 1, y, 0, 1, 1, Gosu::Color::BLACK)
+        cur_text.draw(x + 1, y, 0, 1, 1, Gosu::Color::BLACK)
+        cur_text.draw(x, y - 1, 0, 1, 1, Gosu::Color::BLACK)
+        cur_text.draw(x, y + 1, 0, 1, 1, Gosu::Color::BLACK)
         cur_text.draw(x,     y, 0, 1, 1, Gosu::Color::WHITE)
       end
     end
@@ -69,7 +72,9 @@ module Worms
       @objects.reject! { |o| o.update == false }
 
       # If it's a player's turn, forward controls.
-      if not @waiting and not @players[@current_player].dead then
+      if another_players_has_dead @current_player, @players
+        @waiting = true
+      elsif not @waiting and not @players[@current_player].dead then
         player = @players[@current_player]
         player.aim_up       if Gosu::button_down? Gosu::KbUp
         player.aim_down     if Gosu::button_down? Gosu::KbDown
@@ -100,6 +105,14 @@ module Worms
       current_player = current_player + 1
       current_player = 0 if current_player >= @player_count
       @players[current_player].dead ? next_player(current_player) : current_player
+    end
+
+    def another_players_has_dead(current_player, players)
+      has_dead = true
+      players.each do |player|
+        has_dead = false if !player.dead && players[current_player] != player
+      end
+      has_dead
     end
   end
 end

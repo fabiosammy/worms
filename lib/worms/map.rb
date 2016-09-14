@@ -96,11 +96,11 @@ module Worms
       @image.composite!(gradient, 0, 0, Magick::MultiplyCompositeOp)
 
       # Finally, place the star in the middle of the map, just onto the ground.
-      star = Magick::Image.read('media/large_star.png').first
-      star_y = 0
-      star_y += 20 until solid?(WIDTH / 2, star_y)
-      @image.composite!(star, (WIDTH - star.columns) / 2, star_y - star.rows * 0.85,
-        Magick::DstOverCompositeOp)
+      # star = Magick::Image.read('media/large_star.png').first
+      # star_y = 0
+      # star_y += 20 until solid?(WIDTH / 2, star_y)
+      # @image.composite!(star, (WIDTH - star.columns) / 2, star_y - star.rows * 0.85,
+      #   Magick::DstOverCompositeOp)
     end
   end
 end

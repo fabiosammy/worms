@@ -22,7 +22,9 @@ module Worms
       # Hit anything?
       if @window.map.solid?(x, y) or @window.objects.any? { |o| o.hit_by?(self) } then
         # Create great particles.
-        5.times { @window.objects << Particle.new(@window, x - 25 + rand(51), y - 25 + rand(51)) }
+        5.times do
+          @window.objects << Particle.new(@window, x - 25 + rand(51), y - 25 + rand(51))
+        end
         @window.map.blast(x, y)
         # Weeee, stereo sound!
         EXPLOSION.play_pan((1.0 * @x / WIDTH) * 2 - 1)
@@ -34,7 +36,7 @@ module Worms
 
     def draw
       # Just draw a small rectangle.
-      Gosu::draw_rect x-2, y-2, 4, 4, 0xff_800000
+      Gosu::draw_rect x-2, y-2, 4, 4, Gosu::Color::BLACK
     end
 
     def hit_by?(missile)

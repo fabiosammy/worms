@@ -122,7 +122,7 @@ module Worms
     end
 
     def shoot
-      @window.objects << Missile.new(@window, x + 10 * @dir, y - 10, @angle * @dir)
+      @window.objects << Missile.new(@window, x + 5 * @dir, y - 10, @angle * @dir)
     end
 
     def hit_by? missile

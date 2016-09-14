@@ -56,6 +56,7 @@ RUN adduser --disabled-password --gecos '' worms \
   && usermod -G video -a 'worms' \
   && usermod -G sudo -a 'worms' \
   && usermod -G dialout -a 'worms' \
+  && usermod -G staff -a 'worms' \
   && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
   && echo 'worms:worms' | chpasswd
 

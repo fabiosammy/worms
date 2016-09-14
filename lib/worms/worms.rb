@@ -8,28 +8,33 @@ module Worms
     def initialize
       super WIDTH, HEIGHT
 
-      self.caption = "RMagick Integration Demo"
+      self.caption = "Worms - Semana de TSI"
 
       # Texts to display in the appropriate situations.
       @player_instructions = []
       @player_won_messages = []
-      2.times do |plr|
-        @player_instructions << Gosu::Image.from_text(
-          "It is the #{ plr == 0 ? 'green' : 'red' } toy soldier's turn.\n" +
-          "(Arrow keys to walk and aim, Return to jump, Space to shoot)",
-          30, :width => width, :align => :center)
-        @player_won_messages << Gosu::Image.from_text(
-          "The #{ plr == 0 ? 'green' : 'red' } toy soldier has won!",
-          30, :width => width, :align => :center)
-      end
 
-      # Create everything!
+      # Create map!
       @map = Map.new
-      @players = [Player.new(self, 100, 40, 0xff_308000), Player.new(self, WIDTH - 100, 40, 0xff_803000)]
+
+      # Add the players
+      @player_count = 7
+      raise "
+        The max players is #{colors.size}.
+        And you trying get #{@player_count} players on this game!
+      " if @player_count > colors.size
+      @players = []
+      @player_count.times do |time_player|
+        new_player = Player.new(self, rand(WIDTH), 40, colors[time_player])
+        @players.push new_player
+        @player_instructions.push new_player.instructions
+        @player_won_messages.push new_player.won_message
+      end
       @objects = @players.dup
 
       # Let any player start.
-      @current_player = rand(2)
+      @current_player = rand(@player_count)
+
       # Currently not waiting for a missile to hit something.
       @waiting = false
     end
@@ -43,7 +48,7 @@ module Worms
       # by drawing it four times, with a little offset in each direction.
 
       cur_text = @player_instructions[@current_player] if not @waiting
-      cur_text = @player_won_messages[1 - @current_player] if @players[@current_player].dead
+      # cur_text = @player_won_messages[@current_player] if @players[@current_player].dead
 
       if cur_text then
         x, y = 0, 30
@@ -51,7 +56,7 @@ module Worms
         cur_text.draw(x + 1, y, 0, 1, 1, 0xff_000000)
         cur_text.draw(x, y - 1, 0, 1, 1, 0xff_000000)
         cur_text.draw(x, y + 1, 0, 1, 1, 0xff_000000)
-        cur_text.draw(x,     y, 0, 1, 1, 0xff_ffffff)
+        cur_text.draw(x,     y, 0, 1, 1, Gosu::Color::WHITE)
       end
     end
 
@@ -71,6 +76,8 @@ module Worms
         player.try_walk(-1) if Gosu::button_down? Gosu::KbLeft
         player.try_walk(+1) if Gosu::button_down? Gosu::KbRight
         player.try_jump     if Gosu::button_down? Gosu::KbReturn
+      elsif @players[@current_player].dead
+        @current_player = next_player @current_player
       end
     end
 
@@ -78,9 +85,21 @@ module Worms
       if id == Gosu::KbSpace and not @waiting and not @players[@current_player].dead then
         # Shoot! This is handled in button_down because holding space shouldn't auto-fire.
         @players[@current_player].shoot
-        @current_player = 1 - @current_player
+        @current_player = next_player @current_player
         @waiting = true
       end
+    end
+
+    private
+
+    def colors
+      [:black, :white, :aqua, :red, :green, :blue, :yellow]
+    end
+
+    def next_player(current_player)
+      current_player = current_player + 1
+      current_player = 0 if current_player >= @player_count
+      @players[current_player].dead ? next_player(current_player) : current_player
     end
   end
 end

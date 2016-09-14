@@ -12,13 +12,14 @@ module Worms
     # player as used for collision detection.
     HEIGHT = 14
 
-    attr_reader :x, :y, :dead
+    attr_reader :x, :y, :dead, :name
 
     def initialize(window, x, y, color)
       # Only load the images once for all instances of this class.
       @@images ||= Gosu::Image.load_tiles("media/soldier.png", 40, 50)
 
-      @window, @x, @y, @color = window, x, y, color
+      @window, @x, @y, @color = window, x, y, get_color(color)
+      @name = color
       @vy = 0
 
       # -1: left, +1: right
@@ -26,6 +27,18 @@ module Worms
 
       # Aiming angle.
       @angle = 90
+    end
+
+    def instructions
+      Gosu::Image.from_text(
+        "It is the #{ @name } toy soldier's turn.",
+        30, width: WIDTH - 50, align: :center)
+    end
+
+    def won_message
+      Gosu::Image.from_text(
+        "The #{ @name } toy soldier has won!",
+        30, width: WIDTH - 30, align: :center)
     end
 
     def draw
@@ -119,6 +132,31 @@ module Worms
         return true
       else
         return false
+      end
+    end
+
+    private
+
+    def get_color(color)
+      case color
+      when :black
+        Gosu::Color::BLACK
+      when :white
+        Gosu::Color::WHITE
+      when :aqua
+        Gosu::Color::AQUA
+      when :red
+        Gosu::Color::RED
+      when :green
+        Gosu::Color::GREEN
+      when :blue
+        Gosu::Color::BLUE
+      when :yellow
+        Gosu::Color::YELLOW
+      when :cyan
+        Gosu::Color::CYAN
+      else
+        Gosu::Color::GRAY
       end
     end
   end

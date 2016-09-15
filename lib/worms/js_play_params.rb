@@ -26,7 +26,8 @@ module Worms
       out = []
       @players.each do |player|
         next if player.dead || player == @player
-        out << Gosu::distance(player.x, player.y, @player.x, @player.y) * @player.dir
+        direction = player.x > @player.x ? 1 : -1
+        out << Gosu::distance(player.x, player.y, @player.x, @player.y) * direction
       end
       out
     end

@@ -138,7 +138,7 @@ module Worms
     private
 
     def colors
-      [:black, :white, :aqua, :red, :green, :blue, :yellow]
+      [:white, :aqua, :red, :green, :blue, :yellow]
     end
 
     def next_player(current_player)

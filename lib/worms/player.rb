@@ -44,6 +44,21 @@ module Worms
         30, width: WIDTH - 30, align: :center)
     end
 
+    def action_from_js(action)
+      case action
+      when 'jump'
+        try_jump
+      when 'aim_up'
+        aim_up
+      when 'aim_down'
+        aim_down
+      when 'walk_left'
+        try_walk(-1)
+      when 'walk_right'
+        try_walk(+1)
+      end
+    end
+
     def draw
       if dead then
         # Poor, broken soldier.

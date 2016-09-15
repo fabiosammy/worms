@@ -8,6 +8,7 @@ module Worms
 
     def to_js_params
       {
+        name: @player.name,
         enemies: @enemies,
         pos_x: @player.x,
         pos_y: @player.y,
@@ -16,7 +17,7 @@ module Worms
     end
 
     def self.debug(params)
-      p "DEBUG FROM JS! #{params}"
+      p "DEBUG of #{params['name']} player FROM JS! #{params}"
     end
 
     private

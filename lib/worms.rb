@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'gosu'
 require 'rmagick'
+require 'execjs'
 
 WIDTH, HEIGHT = 600, 600
 

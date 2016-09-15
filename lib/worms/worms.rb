@@ -17,19 +17,43 @@ module Worms
       # Create map!
       @map = Map.new
 
+      # Last shoot and debug occur at
+      @last_debug = Gosu::milliseconds
+      @last_shoot = Gosu::milliseconds
+
       # Add the players
-      @player_count = 3
-      raise "
-        The max players is #{colors.size}.
-        And you trying get #{@player_count} players on this game!
-      " if @player_count > colors.size
+      failed = []
+      @player_count = 0
+      js_players = File.join(ROOT_DIR, 'players/*.js')
       @players = []
-      @player_count.times do |time_player|
-        new_player = Player.new(self, rand(WIDTH), 40, colors[time_player])
-        @players.push new_player
-        @player_instructions.push new_player.instructions
-        @player_won_messages.push new_player.won_message
+      Dir.glob(js_players).each do |js_player|
+        begin
+          p "Loading player #{js_player}"
+          new_player = Player.new(
+            self,
+            rand(WIDTH),
+            40,
+            colors[@player_count],
+            File.basename(js_player, '.js'),
+            js_player
+          )
+          @players.push new_player
+          @player_instructions.push new_player.instructions
+          @player_won_messages.push new_player.won_message
+          @player_count += 1
+          raise "
+            The max players is #{colors.size}.
+            And you trying get #{@player_count} players on this game!
+          " if @player_count > colors.size
+        rescue
+          p "Failed on load #{js_player} player"
+          failed << js_player
+        end
       end
+      raise "
+        You need at least 2 players.
+        Create 2 js files in players/ with a \"play\" function.
+      " unless @player_count > 1
       @objects = @players.dup
 
       # Let any player start.
@@ -71,25 +95,41 @@ module Worms
       # Remove all objects whose update method returns false.
       @objects.reject! { |o| o.update == false }
 
-      # If it's a player's turn, forward controls.
+      # Waiting until all players stay in the ground
+      @waiting = true if Gosu::milliseconds < 2000
+
+      # If all another player has dead, so finish and waiting
       if another_players_has_dead @current_player, @players
         @waiting = true
+      # If it's a player's turn, forward controls.
       elsif not @waiting and not @players[@current_player].dead then
+        # TODO: Add the limit to the current_player do something
         player = @players[@current_player]
-        player.aim_up       if Gosu::button_down? Gosu::KbUp
-        player.aim_down     if Gosu::button_down? Gosu::KbDown
-        player.try_walk(-1) if Gosu::button_down? Gosu::KbLeft
-        player.try_walk(+1) if Gosu::button_down? Gosu::KbRight
-        player.try_jump     if Gosu::button_down? Gosu::KbReturn
+        player_call = player.js_play.call_context_play(@players)
+
+        # Debug at 2 sec
+        if player_call['debug'] == 'true' && (Gosu::milliseconds - @last_debug) > 2000
+          JsPlayParams.debug(player_call['params'])
+          @last_debug = Gosu::milliseconds
+        end
+
+        # Do play action!
+        player.action_from_js player_call['action']
+        if player_call['action'] == 'shoot' && (Gosu::milliseconds - @last_shoot) > 1000
+          shoot!
+        end
+      # Skip the player if has dead
       elsif @players[@current_player].dead
         @current_player = next_player @current_player
       end
     end
 
-    def button_down(id)
-      if id == Gosu::KbSpace and not @waiting and not @players[@current_player].dead then
-        # Shoot! This is handled in button_down because holding space shouldn't auto-fire.
+    def shoot!
+      if not @waiting and not @players[@current_player].dead then
+        # Shoot!
+        # This is handled in action because to finish round of current_player.
         @players[@current_player].shoot
+        @last_shoot = Gosu::milliseconds
         @current_player = next_player @current_player
         @waiting = true
       end

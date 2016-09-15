@@ -12,7 +12,7 @@ module Worms
     private
 
     def build_params(players)
-      JsPlayParams.new(@player, players)
+      JsPlayParams.new(@player, players).to_js_params
     end
   end
 end

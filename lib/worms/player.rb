@@ -10,16 +10,19 @@ module Worms
   class Player
     # Magic numbers considered harmful! This is the height of the
     # player as used for collision detection.
+    # TODO: do a hp to char
     HEIGHT = 14
 
-    attr_reader :x, :y, :dead, :name
+    attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir
 
-    def initialize(window, x, y, color)
+    def initialize(window, x, y, color, name, js_file)
       # Only load the images once for all instances of this class.
       @@images ||= Gosu::Image.load_tiles("media/soldier.png", 40, 50)
 
       @window, @x, @y, @color = window, x, y, get_color(color)
-      @name = color
+      @name = name
+      @js_file = js_file
+      @js_play = JsPlay.new(self)
       @vy = 0
 
       # -1: left, +1: right

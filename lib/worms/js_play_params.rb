@@ -1,13 +1,22 @@
 module Worms
   class JsPlayParams
-    attr_reader :enemies, :pos_x, :pos_y
-
     def initialize(player, players)
       @player = player
       @players = players
       @enemies = build_enemies
-      @pos_x = @player.x
-      @pos_y = @player.y
+    end
+
+    def to_js_params
+      {
+        enemies: @enemies,
+        pos_x: @player.x,
+        pos_y: @player.y,
+        direction: @player.dir
+      }
+    end
+
+    def self.debug(params)
+      p "DEBUG FROM JS! #{params}"
     end
 
     private

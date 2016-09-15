@@ -24,8 +24,8 @@ module Worms
     def build_enemies
       out = []
       @players.each do |player|
-        next if player == @player
-        out << Gosu::distance(player.x, player.y, @player.x, @player.y)
+        next if player.dead || player == @player
+        out << Gosu::distance(player.x, player.y, @player.x, @player.y) * @player.dir
       end
       out
     end

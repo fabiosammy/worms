@@ -13,6 +13,7 @@ module Worms
       # Texts to display in the appropriate situations.
       @player_instructions = []
       @player_won_messages = []
+      @time_up = false # End the time
 
       # Create map!
       @map = Map.new
@@ -70,12 +71,16 @@ module Worms
 
       # If any text should be displayed, draw it - and add a nice black border around it
       # by drawing it four times, with a little offset in each direction.
-      if not @waiting
+      if @time_up
+        cur_text = game_over
+      elsif not @waiting
         cur_text = @player_instructions[@current_player]
       elsif another_players_has_dead @current_player, @players
         cur_text = @player_won_messages[@current_player]
         @waiting = true
       end
+
+      draw_time
 
       if cur_text then
         x, y = 0, 30
@@ -98,24 +103,24 @@ module Worms
       # Waiting until all players stay in the ground
       @waiting = true if Gosu::milliseconds < 2000
 
-      # If all another player has dead, so finish and waiting
-      if another_players_has_dead @current_player, @players
+      # If all another player has dead, or time_up, so finish and waiting
+      if @time_up or (not @wating and another_players_has_dead(@current_player, @players))
         @waiting = true
       # If it's a player's turn, forward controls.
-      elsif not @waiting and not @players[@current_player].dead then
+      elsif not @waiting and not @players[@current_player].dead
         # TODO: Add the limit to the current_player do something
         player = @players[@current_player]
         player_call = player.js_play.call_context_play(@players)
 
         # Debug at 2 sec
-        if player_call['debug'] == 'true' && (Gosu::milliseconds - @last_debug) > 2000
+        if player_call['debug'] == 'true' && (Gosu::milliseconds - @last_debug) > 1500
           JsPlayParams.debug(player_call['params'])
           @last_debug = Gosu::milliseconds
         end
 
         # Do play action!
         player.action_from_js player_call['action']
-        if player_call['action'] == 'shoot' && (Gosu::milliseconds - @last_shoot) > 1000
+        if player_call['action'] == 'shoot' && (Gosu::milliseconds - @last_shoot) > 2000
           shoot!
         end
       # Skip the player if has dead
@@ -153,6 +158,39 @@ module Worms
         has_dead = false if !player.dead && players[current_player] != player
       end
       has_dead
+    end
+
+    def draw_time
+      Gosu::Image.from_text(
+        "#{ ms_to_time }", 30, align: :left
+      ).draw(0, 0, 0, 1, 1, Gosu::Color::RED)
+    end
+
+    def game_over
+      Gosu::Image.from_text(
+        "#{ text_score }", 30, align: :center, width: WIDTH - 60
+      ).draw(0, 0, 0, 1, 1, Gosu::Color::BLUE)
+    end
+
+    def text_score(score = [], text = "GAME OVER!\n")
+      @players.each do |player|
+        score << { name: player.name, hp: player.hp }
+      end
+      score.sort_by { |player| player[:hp] }.each do |player|
+        text += "#{player[:name]} - #{player[:hp]} \n"
+      end
+      text
+    end
+
+    def ms_to_time
+      seconds = (@time_up || Gosu::milliseconds) / 1000
+      minutes = seconds.to_i / 60
+      seconds -= minutes * 60
+      if not @time_up and minutes >= GAME_TIME
+        @waiting = true
+        @time_up = Gosu::milliseconds
+      end
+      "#{format '%02d', minutes}:#{format '%02d', seconds}"
     end
   end
 end

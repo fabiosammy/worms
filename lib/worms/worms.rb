@@ -116,9 +116,9 @@ module Worms
         @players[@current_player].time_up = false
         @current_player = next_player @current_player
       elsif not @waiting and not @players[@current_player].dead
-        # TODO: Add the limit to the current_player do something
         player = @players[@current_player]
         player.time_up = Gosu::milliseconds unless player.time_up
+        (player.try_walk && return) if player.moving
         player_call = player.js_play.call_context_play(@players)
         player.custom_params = player_call['custom_params']
 
@@ -129,9 +129,10 @@ module Worms
         end
 
         # Do play action!
-        player.action_from_js player_call['action']
-        if player_call['action'] == 'shoot' && (Gosu::milliseconds - @last_shoot) > 2000
+        if player_call['action'] == 'shoot'
           shoot!
+        else
+          player.action_from_js player_call['action']
         end
       end
     end

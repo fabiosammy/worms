@@ -12,8 +12,8 @@ module Worms
     # player as used for collision detection.
     HEIGHT = 14
 
-    attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir, :hp
-    attr_accessor :custom_params, :moves, :time_up
+    attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir, :hp, :moving
+    attr_accessor :custom_params, :moves, :time_up, :move_dir
 
     def initialize(window, x, y, color, name, js_file)
       # Only load the images once for all instances of this class.
@@ -33,6 +33,7 @@ module Worms
       @hp = 100
       @moves = 4
       @time_up = false
+      @moving = false
 
       # Aiming angle.
       @angle = 90
@@ -64,7 +65,7 @@ module Worms
       when 'aim'
         aim(action[1], action[2])
       when 'walk'
-        try_walk(action[1] == 'left' ? -1 : +1)
+        try_walk_action(action[1], action[2].to_i)
       when 'jump'
         try_jump(action[1])
       end
@@ -145,7 +146,21 @@ module Worms
       @angle += 2 unless @angle > 170
     end
 
-    def try_walk(dir)
+    def try_walk_action(direction, value)
+      return if value > 170
+      value = 2 if value < 2
+      @moving = value - 1
+      @move_dir = direction == 'left' ? -1 : +1
+      really_try_walk(@move_dir)
+    end
+
+    def try_walk
+      @moving -= 1
+      @moving = false if @moving <= 0
+      really_try_walk(@move_dir)
+    end
+
+    def really_try_walk(dir)
       @show_walk_anim = true
       @dir = dir
       # First, magically move up (so soldiers can run up hills)

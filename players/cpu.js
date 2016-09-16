@@ -22,8 +22,8 @@ function play(params) {
   // * shoot      - shoot and go to next enemie
   // * aim_up_2   - move the aim to up 0 angle, you can change the 2 to 2-170
   // * aim_down_2 - move the aim to down 0 angle, you can change the 2 to 2-170
-  // * walk_left  - move to the left
-  // * walk_right - move to the right
+  // * walk_left_2  - move to the left 2 points in the x axis, you can change the 2 to 2-170
+  // * walk_right_2 - move to the right 2 points in the x axis, you can change the 2 to 2-170
   // * jump_left  - jump to the left
   // * jump_right - jump to the right
   // * jump       - just jump

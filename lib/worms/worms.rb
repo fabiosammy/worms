@@ -12,7 +12,6 @@ module Worms
 
       # Texts to display in the appropriate situations.
       @player_instructions = []
-      @player_won_messages = []
       @time_up = false # End the time
 
       # Create map!
@@ -40,7 +39,6 @@ module Worms
           )
           @players.push new_player
           @player_instructions.push new_player.instructions
-          @player_won_messages.push new_player.won_message
           @player_count += 1
           raise "
             The max players is #{colors.size}.
@@ -72,11 +70,17 @@ module Worms
       # If any text should be displayed, draw it - and add a nice black border around it
       # by drawing it four times, with a little offset in each direction.
       if @time_up
-        cur_text = game_over
+        text = if another_players_has_dead(@current_player, @players)
+          @players[@current_player].won_message + "\n"
+        else
+          "GAME OVER!\n"
+        end
+        cur_text = game_over(text)
       elsif not @waiting
         cur_text = @player_instructions[@current_player]
       elsif another_players_has_dead @current_player, @players
-        cur_text = @player_won_messages[@current_player]
+        cur_text = game_over(@players[@current_player].won_message)
+        @time_up = Gosu::milliseconds
         @waiting = true
       end
 
@@ -166,13 +170,13 @@ module Worms
       ).draw(0, 0, 0, 1, 1, Gosu::Color::RED)
     end
 
-    def game_over
+    def game_over(text)
       Gosu::Image.from_text(
-        "#{ text_score }", 30, align: :center, width: WIDTH - 60
+        "#{ text_score(text) }", 30, align: :center, width: WIDTH - 60
       ).draw(0, 0, 0, 1, 1, Gosu::Color::BLUE)
     end
 
-    def text_score(score = [], text = "GAME OVER!\n")
+    def text_score(text = "GAME OVER!\n", score = [])
       @players.each do |player|
         score << { name: player.name, hp: player.hp }
       end

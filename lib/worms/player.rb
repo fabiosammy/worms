@@ -41,9 +41,7 @@ module Worms
     end
 
     def won_message
-      Gosu::Image.from_text(
-        "The #{ @name } toy soldier has won!",
-        30, width: WIDTH - 30, align: :center)
+      "The #{ @name } toy soldier has won!"
     end
 
     def action_from_js(action)

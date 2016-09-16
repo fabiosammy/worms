@@ -181,7 +181,7 @@ module Worms
       @players.each do |player|
         score << { name: player.name, hp: player.hp }
       end
-      score.sort_by { |player| player[:hp] }.each do |player|
+      score.sort_by { |player| player[:hp] }.reverse.each do |player|
         text += "#{player[:name]} - #{player[:hp]} \n"
       end
       text

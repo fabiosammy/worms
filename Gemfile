@@ -6,7 +6,7 @@ ruby '2.3.1'
 gem 'gosu', '~> 0.10.7'
 
 # Chipmunk - Enhanced ruby bindings for the chipmunk game physics engine.
-gem 'chipmunk', '~> 6.1', '>= 6.1.3.4'
+gem 'chipmunk', '~> 5.3', '>= 5.3.4.5'
 
 # Rmagick RMagick is an interface between Ruby and ImageMagick.
 gem 'rmagick', '~> 2.15', '>= 2.15.4'
@@ -19,12 +19,12 @@ gem 'celluloid-io', '~> 0.17.3'
 
 # Another gems
 group :development do
-  gem 'releasy', '~> 0.2.2'
+  gem 'releasy', git: 'https://github.com/Spooner/releasy.git', branch: :master
 
   # You need force the version of ocra to releasy
   gem 'ocra', '~> 1.3', '= 1.3.4'
 end
-gem 'texplay', '~> 0.4.4.pre'
+# gem 'texplay', '~> 0.3.5'
 gem 'ashton', '~> 0.1.6'
 gem 'gamebox', '~> 0.5.5'
 gem 'chingu', '~> 0.8.1'

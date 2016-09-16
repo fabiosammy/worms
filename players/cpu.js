@@ -6,9 +6,12 @@
 function play(params) {
   // The params object has:
   // * name      - the name of player
-  // * enemies   - array has values with the distance of enemies alive.
-  //               If the value is < 0, than the enemie is to the left
-  //               If the value is >= 0, than the enemie is to the right
+  // * enemies   - a array with arrays of enemies, with the indexes:
+  //                0 - the enemy name
+  //                1 - the distance of enemy alive.
+  //                    If the value is < 0, than the enemy is to the left
+  //                    If the value is >= 0, than the enemy is to the right
+  //                2 - the y axis of enemy
   // * direction - if -1 than you see to the left, otherwise, you see to the right
   // * pos_x     - your position in the x axis
   // * pos_y     - your position in the y axis

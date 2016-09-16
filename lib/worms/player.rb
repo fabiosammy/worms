@@ -10,7 +10,6 @@ module Worms
   class Player
     # Magic numbers considered harmful! This is the height of the
     # player as used for collision detection.
-    # TODO: do a hp to char
     HEIGHT = 14
 
     attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir, :hp

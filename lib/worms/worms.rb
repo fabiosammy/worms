@@ -113,10 +113,12 @@ module Worms
       # If it's a player's turn, forward controls.
       elsif @players[@current_player].cant_play?
         @players[@current_player].moves = 4
+        @players[@current_player].time_up = false
         @current_player = next_player @current_player
       elsif not @waiting and not @players[@current_player].dead
         # TODO: Add the limit to the current_player do something
         player = @players[@current_player]
+        player.time_up = Gosu::milliseconds unless player.time_up
         player_call = player.js_play.call_context_play(@players)
         player.custom_params = player_call['custom_params']
 

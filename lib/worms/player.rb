@@ -13,7 +13,7 @@ module Worms
     HEIGHT = 14
 
     attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir, :hp
-    attr_accessor :custom_params, :moves
+    attr_accessor :custom_params, :moves, :time_up
 
     def initialize(window, x, y, color, name, js_file)
       # Only load the images once for all instances of this class.
@@ -32,6 +32,7 @@ module Worms
       # The player is full health
       @hp = 100
       @moves = 4
+      @time_up = false
 
       # Aiming angle.
       @angle = 90
@@ -49,10 +50,12 @@ module Worms
 
     def cant_play?
       @moves == 0 or
+        Gosu::milliseconds - (@time_up || Gosu::milliseconds) > 5000 or
         dead
     end
 
     def action_from_js(action)
+      return if action == 'none'
       action = action.split('_')
       @moves -= 1
       case action[0]

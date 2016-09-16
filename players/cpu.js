@@ -27,7 +27,8 @@ function play(params) {
   // * jump_left  - jump to the left
   // * jump_right - jump to the right
   // * jump       - just jump
-  var action = 'shoot';
+  // * none       - don't anything
+  var action = 'none';
 
   var return_obj = {
     'debug': 'true',

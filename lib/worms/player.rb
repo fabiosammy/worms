@@ -13,6 +13,7 @@ module Worms
     HEIGHT = 14
 
     attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir, :hp
+    attr_accessor :custom_params
 
     def initialize(window, x, y, color, name, js_file)
       # Only load the images once for all instances of this class.
@@ -23,6 +24,7 @@ module Worms
       @js_file = js_file
       @js_play = JsPlay.new(self)
       @vy = 0
+      @custom_params = []
 
       # -1: left, +1: right
       @dir = -1

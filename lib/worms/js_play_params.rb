@@ -12,7 +12,8 @@ module Worms
         enemies: @enemies,
         pos_x: @player.x,
         pos_y: @player.y,
-        direction: @player.dir
+        direction: @player.dir,
+        custom_params: @player.custom_params
       }
     end
 

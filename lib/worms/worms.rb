@@ -115,6 +115,7 @@ module Worms
         # TODO: Add the limit to the current_player do something
         player = @players[@current_player]
         player_call = player.js_play.call_context_play(@players)
+        player.custom_params = player_call['custom_params']
 
         # Debug at 2 sec
         if player_call['debug'] == 'true' && (Gosu::milliseconds - @last_debug) > 1500

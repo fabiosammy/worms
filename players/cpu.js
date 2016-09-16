@@ -32,6 +32,6 @@ function play(params) {
     'action': action,
     'params': params
   };
-  return_obj['params']['my_own'] = 'custom param to debug';
+  return_obj['params']['custom_params'] = 'custom param to next access';
   return return_obj;
 }

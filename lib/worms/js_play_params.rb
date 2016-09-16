@@ -13,6 +13,7 @@ module Worms
         pos_x: @player.x,
         pos_y: @player.y,
         direction: @player.dir,
+        moves: @player.moves,
         custom_params: @player.custom_params
       }
     end

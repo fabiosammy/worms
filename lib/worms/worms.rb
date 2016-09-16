@@ -111,6 +111,9 @@ module Worms
       if @time_up or (not @wating and another_players_has_dead(@current_player, @players))
         @waiting = true
       # If it's a player's turn, forward controls.
+      elsif @players[@current_player].cant_play?
+        @players[@current_player].moves = 4
+        @current_player = next_player @current_player
       elsif not @waiting and not @players[@current_player].dead
         # TODO: Add the limit to the current_player do something
         player = @players[@current_player]
@@ -128,9 +131,6 @@ module Worms
         if player_call['action'] == 'shoot' && (Gosu::milliseconds - @last_shoot) > 2000
           shoot!
         end
-      # Skip the player if has dead
-      elsif @players[@current_player].dead
-        @current_player = next_player @current_player
       end
     end
 

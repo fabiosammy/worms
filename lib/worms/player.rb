@@ -13,7 +13,7 @@ module Worms
     HEIGHT = 14
 
     attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir, :hp
-    attr_accessor :custom_params
+    attr_accessor :custom_params, :moves
 
     def initialize(window, x, y, color, name, js_file)
       # Only load the images once for all instances of this class.
@@ -31,6 +31,7 @@ module Worms
 
       # The player is full health
       @hp = 100
+      @moves = 4
 
       # Aiming angle.
       @angle = 90
@@ -46,8 +47,14 @@ module Worms
       "The #{ @name } toy soldier has won!"
     end
 
+    def cant_play?
+      @moves == 0 or
+        dead
+    end
+
     def action_from_js(action)
       action = action.split('_')
+      @moves -= 1
       case action[0]
       when 'jump'
         try_jump

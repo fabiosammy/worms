@@ -16,6 +16,7 @@ function play(params) {
   // * direction - if -1 than you see to the left, otherwise, you see to the right
   // * pos_x     - your position in the x axis
   // * pos_y     - your position in the y axis
+  // * moves     - remaing moves in the turn
 
   // The actions disponible:
   // * shoot      - shoot and go to next enemie

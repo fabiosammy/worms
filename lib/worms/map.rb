@@ -55,6 +55,10 @@ module Worms
     CRATER_SHADOW = CRATER_IMAGE.shadow(0, 0, (SH_RADIUS - RADIUS) / 2, 1)
 
     def blast x, y
+      # Avoid "Blob length mismatch"
+      x = 60 if x < 60
+      x = WIDTH - 60 if x > WIDTH - 60
+
       # Draw the shadow (twice for more intensity), then erase a circle from the map.
       @image.composite! CRATER_SHADOW, x - SH_RADIUS, y - SH_RADIUS, Magick::AtopCompositeOp
       @image.composite! CRATER_SHADOW, x - SH_RADIUS, y - SH_RADIUS, Magick::AtopCompositeOp

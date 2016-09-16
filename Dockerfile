@@ -11,7 +11,8 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
   build-essential \
   sudo \
-  nodejs
+  nodejs \
+  p7zip-full
 
 RUN apt-get install -y --no-install-recommends \
   libsdl2-dev \
@@ -99,4 +100,4 @@ RUN chown -R worms:worms $APP
 # tell the Rails dev server to bind to all interfaces by
 # default.
 #CMD ["/usr/bin/sudo", "/usr/sbin/sshd", "-D"]
-CMD ["ruby", "main.rb"]
+CMD ["ruby", "Worms.rb"]

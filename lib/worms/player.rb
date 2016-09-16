@@ -63,7 +63,7 @@ module Worms
       when 'jump'
         try_jump(action[1])
       when 'aim'
-        aim(action[1], action[2])
+        aim(action[1], action[2].to_i)
       when 'walk'
         try_walk_action(action[1], action[2].to_i)
       when 'jump'

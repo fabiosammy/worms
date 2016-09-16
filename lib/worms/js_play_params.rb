@@ -31,7 +31,8 @@ module Worms
         out << [
           player.name,
           Gosu::distance(player.x, player.y, @player.x, @player.y) * direction,
-          player.y
+          player.y,
+          player.hp
         ]
       end
       out

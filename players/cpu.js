@@ -12,6 +12,7 @@ function play(params) {
   //                    If the value is < 0, than the enemy is to the left
   //                    If the value is >= 0, than the enemy is to the right
   //                2 - the y axis of enemy
+  //                3 - the hp of enemy
   // * direction - if -1 than you see to the left, otherwise, you see to the right
   // * pos_x     - your position in the x axis
   // * pos_y     - your position in the y axis
@@ -32,6 +33,9 @@ function play(params) {
     'action': action,
     'params': params
   };
-  return_obj['params']['custom_params'] = 'custom param to next access';
+  return_obj['params']['custom_params'] = {
+    'last_x': params['pos_x'],
+    'last_action': action
+  };
   return return_obj;
 }

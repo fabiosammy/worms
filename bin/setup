@@ -13,7 +13,8 @@ PARAMS_DISPLAY="-e DISPLAY=unix$DISPLAY -e XDG_RUNTIME_DIR=/run/user/1000 -v /tm
 PARAMS_LOCK="-v /dev/dri:/dev/dri:rw -v /dev/shm:/dev/shm -v /var/lib/dbus:/var/lib/dbus"
 #PARAMS_SOUND="--device /dev/snd:/dev/snd"
 
-IMAGE="worms_clone"
+IMAGE="fabiosammy/worms_clone"
+CONTAINER="worms_clone"
 # ARENA="${IMAGE}_arena"
 # [ $(docker ps | grep $ARENA | wc -l ) -gt 0 ] && PARAMS_LINK="--link $ARENA:$ARENA"
 [ "$(docker images | grep "$IMAGE")" == "" ] && [ "$1" != "clean" ] && docker build -t $IMAGE .
@@ -24,8 +25,8 @@ if [ "$1" == "" ] ; then
     $PARAMS_DISPLAY \
     $PARAMS_SOUND \
     $PARAMS_LINK \
-    --name $IMAGE \
-    $IMAGE 
+    --name $CONTAINER \
+    $IMAGE
 elif [ "$1" == "force-build" ] ; then
   docker build -t $IMAGE .
 elif [ "$1" == "clean" ] ; then
@@ -33,5 +34,5 @@ elif [ "$1" == "clean" ] ; then
   docker rmi $IMAGE
 else
   docker exec -it \
-    $IMAGE $1
+    $CONTAINER $1
 fi

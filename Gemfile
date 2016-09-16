@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.3.1'
+
 # Gosu - 2D game development library.
 gem 'gosu', '~> 0.10.7'
 
@@ -16,7 +18,9 @@ gem 'opengl', '~> 0.9.2'
 gem 'celluloid-io', '~> 0.17.3'
 
 # Another gems
-gem 'releasy', '~> 0.2.2'
+group :development do
+  gem 'releasy', '~> 0.2.2'
+end
 gem 'texplay', '~> 0.4.4.pre'
 gem 'ashton', '~> 0.1.6'
 gem 'gamebox', '~> 0.5.5'

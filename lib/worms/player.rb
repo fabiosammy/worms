@@ -47,7 +47,7 @@ module Worms
     end
 
     def action_from_js(action)
-      action = action.split!('_')
+      action = action.split('_')
       case action[0]
       when 'jump'
         try_jump

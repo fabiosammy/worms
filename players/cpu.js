@@ -22,6 +22,9 @@ function play(params) {
   // * aim_down_2 - move the aim to down 0 angle, you can change the 2 to 2-170
   // * walk_left  - move to the left
   // * walk_right - move to the right
+  // * jump_left  - jump to the left
+  // * jump_right - jump to the right
+  // * jump       - just jump
   var action = 'shoot';
 
   var return_obj = {

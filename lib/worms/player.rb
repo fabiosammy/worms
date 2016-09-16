@@ -53,6 +53,8 @@ module Worms
         aim(action[1], action[2])
       when 'walk'
         try_walk(action[1] == 'left' ? -1 : +1)
+      when 'jump'
+        try_jump(action[1])
       end
     end
 
@@ -143,8 +145,10 @@ module Worms
       2.times { @y += 1 unless @window.map.solid?(x, y + 1) }
     end
 
-    def try_jump
+    def try_jump(diretion = 'none')
       @vy = -12 if @window.map.solid?(x, y + 1)
+      try_walk(-1) if direction == 'left'
+      try_walk(+1) if direction == 'right'
     end
 
     def shoot

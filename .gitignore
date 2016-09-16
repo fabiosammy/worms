@@ -1,2 +1,6 @@
 # Ignore the package folder
 pkg/
+
+# Ignore another players
+players/*.js
+!players/cpu.js

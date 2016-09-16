@@ -20,6 +20,9 @@ gem 'celluloid-io', '~> 0.17.3'
 # Another gems
 group :development do
   gem 'releasy', '~> 0.2.2'
+
+  # You need force the version of ocra to releasy
+  gem 'ocra', '~> 1.3', '= 1.3.4'
 end
 gem 'texplay', '~> 0.4.4.pre'
 gem 'ashton', '~> 0.1.6'

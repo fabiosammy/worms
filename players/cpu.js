@@ -13,15 +13,15 @@ function play(params) {
   //                    If the value is >= 0, than the enemy is to the right
   //                2 - the y axis of enemy
   //                3 - the hp of enemy
-  // * direction - if -1 than you see to the left, otherwise, you see to the right
+  // * direction - if -1 so you seeing to the left, otherwise, you seeing to the right
   // * pos_x     - your position in the x axis
   // * pos_y     - your position in the y axis
-  // * moves     - remaing moves in the turn
+  // * moves     - remaining moves in the turn
 
-  // The actions disponible:
-  // * shoot      - shoot and go to next enemie
-  // * aim_up_2   - move the aim to up 0 angle, you can change the 2 to 2-170
-  // * aim_down_2 - move the aim to down 0 angle, you can change the 2 to 2-170
+  // The actions available:
+  // * shoot      - shoot and go to next enemy
+  // * aim_up_2   - move the aim to up 2 angle, you can change the 2 to 2-170
+  // * aim_down_2 - move the aim to down 2 angle, you can change the 2 to 2-170
   // * walk_left_2  - move to the left 2 points in the x axis, you can change the 2 to 2-170
   // * walk_right_2 - move to the right 2 points in the x axis, you can change the 2 to 2-170
   // * jump_left  - jump to the left

@@ -13,7 +13,7 @@ module Worms
     # TODO: do a hp to char
     HEIGHT = 14
 
-    attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir
+    attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir, :hp
 
     def initialize(window, x, y, color, name, js_file)
       # Only load the images once for all instances of this class.
@@ -27,6 +27,9 @@ module Worms
 
       # -1: left, +1: right
       @dir = -1
+
+      # The player is full health
+      @hp = 100
 
       # Aiming angle.
       @angle = 90
@@ -140,13 +143,14 @@ module Worms
     end
 
     def shoot
-      @window.objects << Missile.new(@window, x + 5 * @dir, y - 10, @angle * @dir)
+      @window.objects << Missile.new(@window, x + 10 * @dir, y - 10, @angle * @dir)
     end
 
     def hit_by? missile
       if Gosu::distance(missile.x, missile.y, x, y) < 30 then
         # Was hit :(
-        @dead = true
+        @hp -= (Gosu::distance(missile.x, missile.y, x, y) - 40) * -1 unless @dead
+        @dead = true if @hp <= 0
         return true
       else
         return false

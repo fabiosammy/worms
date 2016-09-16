@@ -18,8 +18,8 @@ function play(params) {
 
   // The actions disponible:
   // * shoot      - shoot and go to next enemie
-  // * aim_up     - move the aim to up angle
-  // * aim_down   - move the aim to down angle
+  // * aim_up_2   - move the aim to up 0 angle, you can change the 2 to 2-170
+  // * aim_down_2 - move the aim to down 0 angle, you can change the 2 to 2-170
   // * walk_left  - move to the left
   // * walk_right - move to the right
   var action = 'shoot';

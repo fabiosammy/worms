@@ -45,17 +45,14 @@ module Worms
     end
 
     def action_from_js(action)
-      case action
+      action = action.split!('_')
+      case action[0]
       when 'jump'
         try_jump
-      when 'aim_up'
-        aim_up
-      when 'aim_down'
-        aim_down
-      when 'walk_left'
-        try_walk(-1)
-      when 'walk_right'
-        try_walk(+1)
+      when 'aim'
+        aim(action[1], action[2])
+      when 'walk'
+        try_walk(action[1] == 'left' ? -1 : +1)
       end
     end
 
@@ -113,6 +110,17 @@ module Worms
 
       # Soldiers are never deleted (they may die, but that is a different thing).
       true
+    end
+
+    def aim(direction, value)
+      return if value > 170
+      value = 2 if value < 2
+      need_times = value / 2
+      if direction == 'up'
+        need_times.times { aim_up }
+      else
+        need_times.times { aim_down }
+      end
     end
 
     def aim_up

@@ -57,7 +57,7 @@ module Worms
       @moves -= 1
       case action[0]
       when 'jump'
-        try_jump
+        try_jump(action[1])
       when 'aim'
         aim(action[1], action[2])
       when 'walk'
@@ -154,7 +154,7 @@ module Worms
       2.times { @y += 1 unless @window.map.solid?(x, y + 1) }
     end
 
-    def try_jump(diretion = 'none')
+    def try_jump(direction = 'none')
       @vy = -12 if @window.map.solid?(x, y + 1)
       try_walk(-1) if direction == 'left'
       try_walk(+1) if direction == 'right'

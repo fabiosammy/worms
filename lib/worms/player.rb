@@ -49,6 +49,10 @@ module Worms
       "The #{ @name } toy soldier has won!"
     end
 
+    def header_text
+      Gosu::Image.from_text(@name + "\n" + @hp.to_s, 15, align: :center)
+    end
+
     def cant_play?
       @moves == 0 or
         Gosu::milliseconds - (@time_up || Gosu::milliseconds) > 5000 or
@@ -72,6 +76,7 @@ module Worms
     end
 
     def draw
+      header_text.draw(x - 15, y - 50, 0, 1, 1, @color)
       if dead then
         # Poor, broken soldier.
         @@images[0].draw_rot(x, y, 0, 290 * @dir, 0.5, 0.65, @dir * 0.5, 0.5, @color)

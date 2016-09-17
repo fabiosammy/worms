@@ -31,7 +31,7 @@ module Worms
           p "Loading player #{js_player}"
           new_player = Player.new(
             self,
-            rand(WIDTH),
+            init_x_pos,
             40,
             colors[@player_count],
             File.basename(js_player, '.js'),
@@ -188,6 +188,12 @@ module Worms
         text += "#{player[:name]} - #{player[:hp]} \n"
       end
       text
+    end
+
+    def init_x_pos
+      new_x = rand(80..(WIDTH - 80))
+      @players.each { |player| init_x_pos if (player.x - new_x).abs < 120 }
+      new_x
     end
 
     def ms_to_time

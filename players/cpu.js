@@ -19,8 +19,7 @@ function play(params) {
   // * moves     - remaining moves in the turn
 
   // The actions available:
-  // * shoot      - shoot and go to next enemy, with the 20 force
-  // * shoot_30   - shoot with 30 of force and go to next enemy, you can change the 30 to 2-50
+  // * shoot_15   - shoot with 15 of force and go to next enemy, you can change the 15 to 2-30
   // * aim_up_2   - move the aim to up 2 angle, you can change the 2 to 2-170
   // * aim_down_2 - move the aim to down 2 angle, you can change the 2 to 2-170
   // * walk_left_2  - move to the left 2 points in the x axis, you can change the 2 to 2-170
@@ -29,7 +28,7 @@ function play(params) {
   // * jump_right - jump to the right
   // * jump       - just jump
   // * none       - don't anything
-  var action = 'shoot';
+  var action = 'shoot_10';
 
   var return_obj = {
     'debug': 'true',

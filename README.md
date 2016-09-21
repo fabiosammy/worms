@@ -2,10 +2,10 @@
 * [https://www.virtualbox.org/wiki/Downloads]
 
 ##### Baixe a vm appliance (~2.3GB)
-* [https://mega.nz/#!qF1CnAwT]
+* [https://mega.nz/#!6tZVhS5A](https://mega.nz/#!6tZVhS5A!Lm6q8igAOPvCW7ZfzkqGatMg3mO5A9Ll_W8lzLnyNc0)
 
 ##### Baixe o md5 da vm (~50B)
-* [https://mega.nz/#!CMcAVYjK]
+* [https://mega.nz/#!uhQ2EByB](https://mega.nz/#!uhQ2EByB!HG27fOAnBWC16qPDP4JDTj67hGpERxqSZ1VfmwNvxuc)
 
 ##### Importe a appliance no virtualbox
 ####### ATENÇÃO: Marque a opção "Reinicialize o endereço MAC" antes de importar!

@@ -129,19 +129,19 @@ module Worms
         end
 
         # Do play action!
-        if player_call['action'] == 'shoot'
-          shoot!
+        if player_call['action'].split('_')[0] == 'shoot'
+          shoot!(player_call['action'].split('_')[1].to_f)
         else
           player.action_from_js player_call['action']
         end
       end
     end
 
-    def shoot!
+    def shoot!(force = 20)
       if not @waiting and not @players[@current_player].dead then
         # Shoot!
         # This is handled in action because to finish round of current_player.
-        @players[@current_player].shoot
+        @players[@current_player].shoot(force)
         @last_shoot = Gosu::milliseconds
         @current_player = next_player @current_player
         @waiting = true

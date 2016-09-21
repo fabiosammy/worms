@@ -7,9 +7,10 @@ module Worms
     # All missile instances use the same sound.
     EXPLOSION = Gosu::Sample.new("media/explosion.wav")
 
-    def initialize(window, x, y, angle)
+    def initialize(window, x, y, angle, force)
+      force = 0 if force > 50 || force < 0
       # Horizontal/vertical velocity.
-      @vx, @vy = Gosu::offset_x(angle, 20).to_i, Gosu::offset_y(angle, 20).to_i
+      @vx, @vy = Gosu::offset_x(angle, force).to_i, Gosu::offset_y(angle, force).to_i
 
       @window, @x, @y = window, x + @vx, y + @vy
     end

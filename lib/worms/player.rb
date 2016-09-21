@@ -183,8 +183,8 @@ module Worms
       try_walk(+1) if direction == 'right'
     end
 
-    def shoot
-      @window.objects << Missile.new(@window, x + 10 * @dir, y - 10, @angle * @dir)
+    def shoot(force)
+      @window.objects << Missile.new(@window, x + 10 * @dir, y - 10, @angle * @dir, force)
     end
 
     def hit_by? missile

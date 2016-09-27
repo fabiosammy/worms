@@ -13,7 +13,8 @@ module Worms
     HEIGHT = 14
 
     attr_reader :x, :y, :dead, :name, :js_file, :js_play, :dir, :hp, :moving
-    attr_accessor :custom_params, :moves, :time_up, :move_dir
+    attr_accessor :custom_params, :moves, :time_up, :move_dir,
+                  :last_shoot_x, :last_shoot_y
 
     def initialize(window, x, y, color, name, js_file)
       # Only load the images once for all instances of this class.
@@ -184,7 +185,7 @@ module Worms
     end
 
     def shoot(force)
-      @window.objects << Missile.new(@window, x + 10 * @dir, y - 10, @angle * @dir, force)
+      @window.objects << Missile.new(@window, x + 10 * @dir, y - 10, @angle * @dir, force, self)
     end
 
     def hit_by? missile

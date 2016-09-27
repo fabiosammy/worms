@@ -16,6 +16,8 @@ function play(params) {
   // * direction - if -1 so you seeing to the left, otherwise, you seeing to the right
   // * pos_x     - your position in the x axis
   // * pos_y     - your position in the y axis
+  // * last_shoot_x - the x axis of last missile hit
+  // * last_shoot_y - the y axis of last missile hit
   // * moves     - remaining moves in the turn
 
   // The actions available:

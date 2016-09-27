@@ -7,8 +7,9 @@ module Worms
     # All missile instances use the same sound.
     EXPLOSION = Gosu::Sample.new("media/explosion.wav")
 
-    def initialize(window, x, y, angle, force)
+    def initialize(window, x, y, angle, force, player)
       force = 0 if force > 30 || force < 0
+      @player = player
       # Horizontal/vertical velocity.
       @vx, @vy = Gosu::offset_x(angle, force).to_i, Gosu::offset_y(angle, force).to_i
 
@@ -26,6 +27,8 @@ module Worms
         5.times do
           @window.objects << Particle.new(@window, x - 25 + rand(51), y - 25 + rand(51))
         end
+        @player.last_shoot_x = x
+        @player.last_shoot_y = y
         @window.map.blast(x, y)
         # Weeee, stereo sound!
         EXPLOSION.play_pan((1.0 * @x / WIDTH) * 2 - 1)

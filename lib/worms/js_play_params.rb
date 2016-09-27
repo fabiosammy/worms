@@ -12,6 +12,8 @@ module Worms
         enemies: @enemies,
         pos_x: @player.x,
         pos_y: @player.y,
+        last_shoot_x: @player.last_shoot_x,
+        last_shoot_y: @player.last_shoot_y,
         direction: @player.dir,
         moves: @player.moves,
         custom_params: @player.custom_params

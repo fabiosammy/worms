@@ -12,7 +12,7 @@ module Worms
       # Let's start with something simple and load the sky via RMagick.
       # Loading SVG files isn't possible with Gosu, so say wow!
       # (Seems to take a while though)
-      sky = Magick::Image.read("media/landscape.svg").first
+      sky = Magick::Image.read("media/landscape.svg").first.resize_to_fit(WIDTH)
       @sky = Gosu::Image.new(sky, :tileable => true)
 
       # Create the map an stores the RMagick image in @image

@@ -42,9 +42,9 @@ module Worms
           @player_instructions.push new_player.instructions
           @player_count += 1
           raise "
-            The max players is #{colors.size}.
+            The max players is 2.
             And you trying get #{@player_count} players on this game!
-          " if @player_count > colors.size
+          " if @player_count > 2
         rescue
           p "Failed on load #{js_player} player"
           failed << js_player

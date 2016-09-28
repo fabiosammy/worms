@@ -27,6 +27,7 @@ module Worms
       js_players = File.join(ROOT_DIR, 'players/*.js')
       @players = []
       Dir.glob(js_players).each do |js_player|
+        next if js_player.split('/').last == 'cpu.js'
         begin
           p "Loading player #{js_player}"
           new_player = Player.new(

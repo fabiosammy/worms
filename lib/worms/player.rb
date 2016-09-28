@@ -28,7 +28,7 @@ module Worms
       @custom_params = []
 
       # -1: left, +1: right
-      @dir = -1
+      @dir = x > (WIDTH / 2) ? -1 : 1
 
       # The player is full health
       @hp = 100

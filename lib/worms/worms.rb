@@ -192,9 +192,7 @@ module Worms
     end
 
     def init_x_pos
-      new_x = rand(80..(WIDTH - 80))
-      @players.each { |player| init_x_pos if (player.x - new_x).abs < 120 }
-      new_x
+      @players.count == 0 ? 120 : WIDTH - 120
     end
 
     def ms_to_time

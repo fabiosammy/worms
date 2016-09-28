@@ -37,7 +37,7 @@ module Worms
       @moving = false
 
       # Aiming angle.
-      @angle = 90
+      @angle = 45
     end
 
     def instructions
@@ -134,7 +134,7 @@ module Worms
     end
 
     def aim(direction, value)
-      return if value > 170
+      return if value > 60
       value = 2 if value < 2
       need_times = value / 2
       if direction == 'up'

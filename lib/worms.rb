@@ -3,7 +3,7 @@ require 'gosu'
 require 'rmagick'
 require 'execjs'
 
-WIDTH, HEIGHT = 1024, 720
+WIDTH, HEIGHT = 1024, 640
 
 NULL_PIXEL = Magick::Pixel.from_color('none')
 

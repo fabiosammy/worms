@@ -180,8 +180,8 @@ module Worms
 
     def try_jump(direction = 'none')
       @vy = -12 if @window.map.solid?(x, y + 1)
-      try_walk(-1) if direction == 'left'
-      try_walk(+1) if direction == 'right'
+      really_try_walk(-1) if direction == 'left'
+      really_try_walk(+1) if direction == 'right'
     end
 
     def shoot(force)

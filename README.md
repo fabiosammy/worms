@@ -20,10 +20,12 @@
 * Abra um terminal(Iniciar -> Acessórios -> LXTerminal ou Ctrl + Alt + T);
 * Entre na pasta worms com o comando `cd ~/worms/`;
 * Garanta que o desafio esta atualizado com o comando `git pull && bundle install` (Faça isso diariamente);
-* Copie um segundo script para poder batalhar `cp players/cpu.js players/seu_nome.js`;
+* Remova um arquivo de exemplo da maquina `rm -v players/player_1.js`
+* Copie um script para codificar `cp -v players/cpu.js players/seu_nome.js`;
+* Copie um segundo script para poder batalhar `cp -v players/cpu.js players/playerB.js`;
 * Execute o jogo com `ruby Worms.rb`;
 * Você poderá acompanhar um debug no terminal;
-* Feche a janela do jogo, altere o arquivo `players/seu_nome.js` e vença os seus inimigos;
+* Feche a janela do jogo, altere o arquivo `players/seu_nome.js` e vença o seu inimigo `playerB.js`;
 
 ##### Detalhes sobre o desafio
 * Você deverá criar um player que recebe o parâmetro "params", maiores detalhes sobre o parâmetro no arquivo "players/cpu.js";
